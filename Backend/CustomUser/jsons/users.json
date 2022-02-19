@@ -1,0 +1,32 @@
+[
+  {
+    "model":"CustomUser.User",
+    "pk": 1,
+    "fields": {
+      "username": "Натсу",
+      "first name": "Анатолий",
+      "last name": "Васерман",
+      "email": "vaserman@gmail.com"
+    }
+  },
+  {
+    "model":"CustomUser.User",
+    "pk": 2,
+    "fields": {
+      "username": "Картон",
+      "first name": "Антон",
+      "last name": "Картошкин",
+      "email": "cart@gmail.com"
+    }
+  },
+  {
+    "model":"CustomUser.User",
+    "pk": 3,
+    "fields": {
+      "username": "Скат",
+      "first name": "Костя",
+      "last name": "Тёмный",
+      "email": "mark@gmail.com"
+    }
+  }
+]
