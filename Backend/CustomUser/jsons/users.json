@@ -4,9 +4,10 @@
     "pk": 1,
     "fields": {
       "username": "Натсу",
-      "first name": "Анатолий",
-      "last name": "Васерман",
-      "email": "vaserman@gmail.com"
+      "first_name": "Анатолий",
+      "last_name": "Васерман",
+      "email": "vaserman@gmail.com",
+      "birthday_year": 1998
     }
   },
   {
@@ -14,9 +15,10 @@
     "pk": 2,
     "fields": {
       "username": "Картон",
-      "first name": "Антон",
-      "last name": "Картошкин",
-      "email": "cart@gmail.com"
+      "first_name": "Антон",
+      "last_name": "Картошкин",
+      "email": "cart@gmail.com",
+      "birthday_year": 1991
     }
   },
   {
@@ -24,9 +26,10 @@
     "pk": 3,
     "fields": {
       "username": "Скат",
-      "first name": "Костя",
-      "last name": "Тёмный",
-      "email": "mark@gmail.com"
+      "first_name": "Костя",
+      "last_name": "Тёмный",
+      "email": "mark@gmail.com",
+      "birthday_year": 1987
     }
   }
 ]

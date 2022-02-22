@@ -14,11 +14,17 @@ class Command(BaseCommand):
                 User.objects.create_superuser(
                     username=user['fields']['username'],
                     email=user['fields']['email'],
-                    password='123'
+                    password='123',
+                    first_name=user['fields']['first_name'],
+                    last_name=user['fields']['last_name'],
+                    birthday_year=user['fields']['birthday_year']
                 )
             else:
                 User.objects.create_user(
                     username=user['fields']['username'],
                     email=user['fields']['email'],
-                    password='123'
+                    password='123',
+                    first_name=user['fields']['first_name'],
+                    last_name=user['fields']['last_name'],
+                    birthday_year=user['fields']['birthday_year']
                 )
