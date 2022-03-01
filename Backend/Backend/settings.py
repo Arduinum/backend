@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'CustomUser'
+    'CustomUser',
+    'TodoList'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'djangorestframework_camel_case2.render.CamelCaseJSONRenderer',
+    ],
+
+    'DEFAULT_PARSER_CLASSES': [
+        'djangorestframework_camel_case2.parser.CamelCaseJSONParser'
+    ]
+}
+
+# JSON_CAMEL_CASE = {
+#     'RENDERER_CLASS': 'rest_framework.renderers.UnicodeJSONRenderer'
+# }
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
