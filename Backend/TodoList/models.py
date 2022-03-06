@@ -9,6 +9,7 @@ class Project(models.Model):
 
     class Meta:
         db_table = 'project'
+        ordering = ['id']
 
 
 class ToDo(models.Model):
@@ -21,3 +22,4 @@ class ToDo(models.Model):
 
     class Meta:
         db_table = 'todo'
+        ordering = ['id']
