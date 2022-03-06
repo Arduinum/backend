@@ -24,3 +24,7 @@ class ToDoViewSet(PaginateByMaxMixin, ListModelMixin, RetrieveModelMixin, Create
     max_paginate_by = 20
     serializer_class = ToDoModelSerializer
     filterset_class = ToDoDateFilter
+
+    def perform_destroy(self, instance):
+        self.queryset.is_active = False
+        self.queryset.save()
