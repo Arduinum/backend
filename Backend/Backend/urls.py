@@ -14,21 +14,39 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from rest_framework.permissions import AllowAny
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from CustomUser.views import UserViewSet
 from TodoList.views import ProjectViewSet, ToDoViewSet
-
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
 router.register('projects', ProjectViewSet)
 router.register('todos', ToDoViewSet)
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title='Todos',
+        default_version='1.0',
+        description='Documentation to Todo project',
+        contact=openapi.Contact(email='arduinum@admin.local'),
+        license=openapi.License(name='MIT arduinum License')
+    ),
+    public=True,
+    permission_classes=(AllowAny,)
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    path('api-token-auth/', views.obtain_auth_token)
+    path('api-token-auth/', views.obtain_auth_token),
+    path('swagger/', schema_view.with_ui()),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$',
+            schema_view.without_ui()),
+    path('redoc/', schema_view.with_ui('redoc'))
 ]

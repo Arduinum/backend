@@ -1,6 +1,6 @@
 from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase
+from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase, APITestCase
 from .models import User
 from .views import UserViewSet
 
@@ -63,3 +63,18 @@ class TestUserViewSet(TestCase):
         view = UserViewSet.as_view({'post': 'create'})
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+class TestUserViewSet2(APITestCase):
+    def setUp(self) -> None:
+        self.admin = User.objects.create_superuser(username='Android', email='android228@gmail.com', password='12345')
+
+    def test_versioning_v1(self):
+        self.client.login(username='Android', password='12345')
+        response = self.client.get('/api/users/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_versioning_v2(self):
+        self.client.login(username='Android', password='12345')
+        response = self.client.get('/api/users/', headers={'Accept': 'application/json; version=2.0'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
