@@ -22,6 +22,7 @@ from CustomUser.views import UserViewSet
 from TodoList.views import ProjectViewSet, ToDoViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
@@ -48,5 +49,6 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui()),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui()),
-    path('redoc/', schema_view.with_ui('redoc'))
+    path('redoc/', schema_view.with_ui('redoc')),
+    path('graphql/', GraphQLView.as_view(graphiql=True))  # graphql=True - for graphql interface
 ]
