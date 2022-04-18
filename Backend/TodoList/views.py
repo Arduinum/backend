@@ -2,7 +2,8 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateMode
     DestroyModelMixin
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.viewsets import GenericViewSet
-from .serializers import ProjectModelSerializer, ToDoModelSerializer, ToDoModelSerializerBase
+from .serializers import ProjectModelSerializer, ProjectModelSerializerBase, ToDoModelSerializer, \
+    ToDoModelSerializerBase
 from .models import Project, ToDo
 from rest_framework_extensions.mixins import PaginateByMaxMixin
 from .filters import ProjectFilter, ToDoDateFilter
@@ -18,6 +19,10 @@ class ProjectViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, Updat
     serializer_class = ProjectModelSerializer
     filterset_class = ProjectFilter
 
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return ProjectModelSerializer
+        return ProjectModelSerializerBase
 
 # class ToDoViewSet(PaginateByMaxMixin, ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin,
 #                   DestroyModelMixin, GenericViewSet):
@@ -35,5 +40,10 @@ class ToDoViewSet(ListModelMixin, RetrieveModelMixin, CreateModelMixin, UpdateMo
         return ToDoModelSerializerBase
 
     def perform_destroy(self, instance):
-        self.queryset.is_active = False
-        self.queryset.save()
+        try:
+            self.queryset.is_active = False
+            self.queryset.save()
+        except AttributeError:
+            for i, _ in enumerate(self.queryset):
+                self.queryset[i].is_active = False
+                self.queryset[i].save()
