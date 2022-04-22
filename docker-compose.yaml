@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+  db_todos:
+    image: postgres:13.1
+    privileged: true
+    restart: always
+    ports:
+      - 54326:5433
+    environment:
+      POSTGRES_USER: Arduinum
+      POSTGRES_PASSWORD: 228
+      POSTGRES_DB: todos
+
+  backend:
+    build: ./Backend
+    privileged: true
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db_todos
+    command: bash -c "
+        ./wait-for-postgres.sh db_todos &&
+        python manage.py migrate &&
+        gunicorn Backend.wsgi -b 0.0.0.0:8080
+      "
+    environment:
+      DJANGO_SETTINGS_MODULE: 'Backend.settings.prod'
+
+  nginx:
+    build: ./nginx
+    privileged: true
+    ports:
+      - 8000:80
+    depends_on:
+      - backend
+
+  frontend:
+    build: ./frontend
+    privileged: true
+    ports:
+      - 80:80
+    depends_on:
+      - backend
